@@ -23,6 +23,40 @@
             color: #333;
         }
 
+        /* --- PAISAJE CENTRAL --- */
+        #paisaje-central {
+            position: fixed;
+            top: 45%;
+            left: 0;
+            width: 200vw; /* Doble ancho para animar en bucle continuo */
+            height: 32%; /* Acaba justo donde empieza la pista */
+            z-index: 0;
+            display: flex;
+            align-items: flex-end;
+            animation: avanzarPaisaje 0.4s linear infinite;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .paisaje-texto {
+            width: 100vw;
+            display: flex;
+            justify-content: space-around; /* Mantiene la distribución horizontal */
+            align-items: flex-end; /* Alinea los arbustos a la base del div, igual que antes */
+        }
+
+        /* Estilos específicos para la imagen del arbusto */
+        .paisaje-texto img {
+            height: 160px; /* Misma altura máxima que tenían los emoticonos */
+            width: auto;
+            margin: 0 20px;
+        }
+
+        @keyframes avanzarPaisaje {
+            from { transform: translateX(-100vw); }
+            to { transform: translateX(0); }
+        }
+
         /* --- EFECTO VELOCIDAD (LÍNEAS DE PISTA) --- */
         #lineas-pista {
             position: fixed;
@@ -214,6 +248,15 @@
         <h1 id="titulo-final">CARRERA TERMINADA</h1>
         <h2 style="font-size: 40px;">PUNTUACIÓN: <span id="puntos-final">0</span></h2>
         <button class="btn-play" onclick="location.reload()">REINTENTAR</button>
+    </div>
+
+    <div id="paisaje-central">
+        <div class="paisaje-texto">
+            <img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto">
+        </div>
+        <div class="paisaje-texto">
+            <img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto">
+        </div>
     </div>
 
     <div id="lineas-pista"></div>
