@@ -59,7 +59,7 @@
 
         #timer-container {
             position: fixed;
-            bottom: 20px;
+            top: 155px; /* Movido de bottom a top bajo el panel de pregunta */
             left: 50%;
             transform: translateX(-50%);
             width: 60%;
@@ -251,10 +251,8 @@
         }
         opciones.sort(() => Math.random() - 0.5);
 
-        // Definir la franja inferior (aprox desde el 60% hacia abajo)
         let minY = window.innerHeight * 0.6; 
         let maxY = window.innerHeight - 260;
-        // Seguro por si la pantalla es de poca altura
         if (minY > maxY) minY = maxY - 20;
 
         opciones.forEach((val, i) => {
@@ -272,12 +270,10 @@
                 el: div,
                 val: val,
                 x: Math.random() * (window.innerWidth - 260),
-                // Aparecen dentro de la franja inferior
                 y: Math.random() * (maxY - minY) + minY,
-                // Movimiento predominante horizontal (entre 4 y 9)
-                vx: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 5 + 4),
-                // Variación vertical muy leve (entre 0.5 y 2)
-                vy: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 1.5 + 0.5)
+                // Velocidad reducida al 50% (antes 4-9 horizontal, 0.5-2 vertical)
+                vx: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 2.5 + 2),
+                vy: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.75 + 0.25)
             };
 
             div.onclick = () => checkRespuesta(val, correctNum, obj);
@@ -326,7 +322,6 @@
         const maxX = window.innerWidth - 260;
         const maxY = window.innerHeight - 260;
         
-        // Mantener la franja inferior constante
         let minY = window.innerHeight * 0.6; 
         if (minY > maxY) minY = maxY - 20;
 
@@ -334,7 +329,6 @@
             c.x += c.vx; c.y += c.vy;
             
             if (c.x <= 0 || c.x >= maxX) c.vx *= -1;
-            // Rebota si intenta salir de la franja inferior calculada
             if (c.y <= minY || c.y >= maxY) c.vy *= -1;
             
             c.el.style.transform = `translate(${c.x}px, ${c.y}px)`;
