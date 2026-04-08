@@ -15,11 +15,9 @@
             font-family: 'Fredoka', sans-serif;
             margin: 0;
             overflow: hidden;
-            background: var(--color-hierba);
-            background-image: 
-                linear-gradient(90deg, transparent 15%, #ffffff 15.5%, #ffffff 16%, transparent 16.5%),
-                linear-gradient(90deg, transparent 84%, #ffffff 84.5%, #ffffff 85%, transparent 85.5%),
-                linear-gradient(var(--color-pista) 0%, var(--color-pista) 100%);
+            /* Fondo gris por defecto y carga de fondo.png */
+            background: #555 url('fondo.png') no-repeat center center;
+            background-size: cover;
             height: 100vh;
             width: 100vw;
             color: #333;
@@ -120,7 +118,6 @@
             display: block;
         }
 
-        /* Estilo para el emoticono si no carga la imagen */
         .moto-fallback {
             font-size: 60px;
             line-height: 1;
@@ -203,12 +200,12 @@
 <script>
     const TIEMPO_MAX = 30;
     const MAX_NIVELES = 50;
-    const TOTAL_MOTOS = 5; // Cambiado a 5
+    const TOTAL_MOTOS = 5;
 
     let puntos = 0;
     let nivelActual = 1;
     let tiempoRestante = TIEMPO_MAX;
-    let cascos = []; // Mantenemos el nombre de la variable interna para no romper la lógica
+    let cascos = [];
     let juegoActivo = false;
     let timerInterval;
 
@@ -245,7 +242,6 @@
         area.innerHTML = '';
         cascos = [];
 
-        // Generar 5 opciones
         let opciones = [correctNum];
         while(opciones.length < 5) {
             let offset = (Math.random() * 20 - 10).toFixed(2);
@@ -258,7 +254,6 @@
             const div = document.createElement('div');
             div.className = 'moto-contenedor';
             
-            // Lógica de imagen con fallback a emoticono
             const motoNum = i + 1;
             div.innerHTML = `
                 <img src="moto${motoNum}.png" class="moto-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
