@@ -251,7 +251,8 @@
         }
         opciones.sort(() => Math.random() - 0.5);
 
-        let minY = window.innerHeight * 0.6; 
+        // Definir la franja inferior (CAMBIADO: ahora desde el 55% para subir más)
+        let minY = window.innerHeight * 0.55; 
         let maxY = window.innerHeight - 260;
         if (minY > maxY) minY = maxY - 20;
 
@@ -271,9 +272,10 @@
                 val: val,
                 x: Math.random() * (window.innerWidth - 260),
                 y: Math.random() * (maxY - minY) + minY,
-                // Velocidad reducida al 50% (antes 4-9 horizontal, 0.5-2 vertical)
-                vx: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 2.5 + 2),
-                vy: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.75 + 0.25)
+                // Velocidad horizontal reducida un 30% adicional (antes 2-4.5, ahora 1.4-3.15) vx * 0.7
+                vx: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 1.75 + 1.4),
+                // Velocidad vertical reducida un 50% adicional (antes 0.25-1, ahora 0.125-0.5) vy * 0.5
+                vy: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.375 + 0.125)
             };
 
             div.onclick = () => checkRespuesta(val, correctNum, obj);
@@ -322,7 +324,8 @@
         const maxX = window.innerWidth - 260;
         const maxY = window.innerHeight - 260;
         
-        let minY = window.innerHeight * 0.6; 
+        // Mantener la franja inferior constante (CAMBIADO: ahora desde el 55%)
+        let minY = window.innerHeight * 0.55; 
         if (minY > maxY) minY = maxY - 20;
 
         cascos.forEach(c => {
