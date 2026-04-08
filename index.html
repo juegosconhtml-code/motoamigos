@@ -197,11 +197,6 @@
             display: block;
         }
 
-        .moto-fallback {
-            font-size: 140px;
-            line-height: 1;
-        }
-
         .numero-moto {
             margin-top: 10px;
             font-size: 32px;
@@ -330,16 +325,12 @@
 
         let minY = window.innerHeight * 0.55; 
         let maxY = window.innerHeight - MOTO_SIZE;
-
-        // Distribución horizontal controlada: 5 carriles
         const anchoCarril = window.innerWidth / 5;
-        // Velocidades distintas para evitar que viajen pegadas
         const velocidadesBase = [1.5, 2.2, 2.9, 3.6, 4.3].sort(() => Math.random() - 0.5);
 
         opciones.forEach((val, i) => {
             const div = document.createElement('div');
             div.className = 'moto-contenedor';
-            
             const motoNum = (i % 5) + 1;
             div.innerHTML = `
                 <img src="moto${motoNum}.png" class="moto-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -347,7 +338,6 @@
                 <div class="numero-moto">${val.toFixed(2).replace('.', ',')}</div>
             `;
             
-            // Cada moto empieza en el centro de su propio carril (0 a 4)
             const posXInicial = (i * anchoCarril) + (anchoCarril / 2) - (MOTO_SIZE / 2);
             
             const obj = {
@@ -399,7 +389,19 @@
         const maxX = window.innerWidth - MOTO_SIZE;
         cascos.forEach(c => {
             c.x += c.vx; 
-            if (c.x <= 0 || c.x >= maxX) c.vx *= -1;
+            
+            // CORRECCIÓN ANTIVIBRACIÓN:
+            // Si toca el borde izquierdo
+            if (c.x <= 0) {
+                c.x = 0; // Forzamos posición
+                c.vx = Math.abs(c.vx); // Forzamos dirección derecha
+            } 
+            // Si toca el borde derecho
+            else if (c.x >= maxX) {
+                c.x = maxX; // Forzamos posición
+                c.vx = -Math.abs(c.vx); // Forzamos dirección izquierda
+            }
+
             c.el.style.transform = `translate(${c.x}px, ${c.y}px)`;
         });
         requestAnimationFrame(mover);
