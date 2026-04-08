@@ -59,7 +59,7 @@
 
         #timer-container {
             position: fixed;
-            top: 155px; /* Movido de bottom a top bajo el panel de pregunta */
+            top: 155px;
             left: 50%;
             transform: translateX(-50%);
             width: 60%;
@@ -251,7 +251,6 @@
         }
         opciones.sort(() => Math.random() - 0.5);
 
-        // Definir la franja inferior (CAMBIADO: ahora desde el 55% para subir más)
         let minY = window.innerHeight * 0.55; 
         let maxY = window.innerHeight - 260;
         if (minY > maxY) minY = maxY - 20;
@@ -272,10 +271,8 @@
                 val: val,
                 x: Math.random() * (window.innerWidth - 260),
                 y: Math.random() * (maxY - minY) + minY,
-                // Velocidad horizontal reducida un 30% adicional (antes 2-4.5, ahora 1.4-3.15) vx * 0.7
                 vx: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 1.75 + 1.4),
-                // Velocidad vertical reducida un 50% adicional (antes 0.25-1, ahora 0.125-0.5) vy * 0.5
-                vy: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.375 + 0.125)
+                vy: 0 // Velocidad vertical establecida a 0 para mantener la posición intacta
             };
 
             div.onclick = () => checkRespuesta(val, correctNum, obj);
@@ -295,7 +292,8 @@
         } else {
             puntos = Math.max(0, puntos - 1);
             popMensaje("-1", "#f44336");
-            obj.vx *= 1.5; obj.vy *= 1.5; 
+            obj.vx *= 1.5; 
+            // obj.vy ya no se multiplica porque es 0
         }
         document.getElementById('txt-puntos').innerText = puntos;
     }
@@ -322,17 +320,14 @@
         if(!juegoActivo) return;
         
         const maxX = window.innerWidth - 260;
-        const maxY = window.innerHeight - 260;
         
-        // Mantener la franja inferior constante (CAMBIADO: ahora desde el 55%)
-        let minY = window.innerHeight * 0.55; 
-        if (minY > maxY) minY = maxY - 20;
+        // Ya no es necesario comprobar el maxY y minY en el movimiento porque vy es 0
 
         cascos.forEach(c => {
-            c.x += c.vx; c.y += c.vy;
+            c.x += c.vx; 
+            // c.y no cambia
             
             if (c.x <= 0 || c.x >= maxX) c.vx *= -1;
-            if (c.y <= minY || c.y >= maxY) c.vy *= -1;
             
             c.el.style.transform = `translate(${c.x}px, ${c.y}px)`;
         });
