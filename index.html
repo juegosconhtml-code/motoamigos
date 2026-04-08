@@ -23,6 +23,26 @@
             color: #333;
         }
 
+        /* --- EFECTO VELOCIDAD (LÍNEAS DE PISTA) --- */
+        #lineas-pista {
+            position: fixed;
+            top: 77%;
+            left: 0;
+            width: 100vw;
+            height: 15px;
+            background-image: repeating-linear-gradient(90deg, white 0, white 100px, transparent 100px, transparent 200px);
+            /* Velocidad aumentada un 100% (de 0.4s a 0.2s) */
+            animation: avanzarLineas 0.2s linear infinite;
+            z-index: 1; /* Se mantiene detrás de las motos */
+            opacity: 0.8;
+        }
+
+        @keyframes avanzarLineas {
+            from { background-position: 0 0; }
+            /* Animación hacia la derecha (de -200px a 200px) */
+            to { background-position: 200px 0; }
+        }
+
         /* --- PANTALLAS --- */
         .overlay {
             position: fixed;
@@ -105,7 +125,7 @@
             width: 260px;
             height: 260px;
             cursor: pointer;
-            /* El z-index: 10 por defecto se elimina aquí porque se aplica por JS dinámicamente */
+            /* El z-index se aplica por JS dinámicamente */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -195,6 +215,8 @@
         <h2 style="font-size: 40px;">PUNTUACIÓN: <span id="puntos-final">0</span></h2>
         <button class="btn-play" onclick="location.reload()">REINTENTAR</button>
     </div>
+
+    <div id="lineas-pista"></div>
 
     <div id="game-area"></div>
 
