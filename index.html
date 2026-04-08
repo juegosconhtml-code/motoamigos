@@ -179,6 +179,27 @@
             color: #d32f2f;
         }
 
+        /* --- MENSAJE POP (ACTUALIZADO) --- */
+        #mensaje-pop {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* 300% más grande que antes (60px * 3 = 180px) */
+            font-size: 180px;
+            font-weight: 900;
+            z-index: 9999;
+            pointer-events: none;
+            display: none;
+            color: #ffeb3b;
+            /* Reborde fino negro */
+            text-shadow: 
+                -2px -2px 0 #000,  
+                 2px -2px 0 #000,
+                -2px  2px 0 #000,
+                 2px  2px 0 #000;
+        }
+
         /* --- MOTOS --- */
         .moto-contenedor {
             position: absolute;
@@ -249,7 +270,7 @@
         <div id="timer-bar"></div>
     </div>
 
-    <div id="mensaje-pop" style="position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); font-size:60px; font-weight:bold; z-index:9999; pointer-events:none; display:none;"></div>
+    <div id="mensaje-pop"></div>
 
     <div id="pantalla-final" class="overlay" style="display:none;">
         <h1 id="titulo-final">CARRERA TERMINADA</h1>
@@ -326,7 +347,9 @@
         let minY = window.innerHeight * 0.55; 
         let maxY = window.innerHeight - MOTO_SIZE;
         const anchoCarril = window.innerWidth / 5;
-        const velocidadesBase = [1.5, 2.2, 2.9, 3.6, 4.3].sort(() => Math.random() - 0.5);
+
+        // VELOCIDAD REDUCIDA UN 25% (Valores originales eran ~1.5 a 4.3)
+        const velocidadesBase = [1.1, 1.6, 2.2, 2.7, 3.2].sort(() => Math.random() - 0.5);
 
         opciones.forEach((val, i) => {
             const div = document.createElement('div');
@@ -334,7 +357,7 @@
             const motoNum = (i % 5) + 1;
             div.innerHTML = `
                 <img src="moto${motoNum}.png" class="moto-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                <div class="moto-fallback" style="display:none;">🏍️</div>
+                <div class="moto-fallback" style="display:none; font-size: 140px;">🏍️</div>
                 <div class="numero-moto">${val.toFixed(2).replace('.', ',')}</div>
             `;
             
@@ -359,13 +382,13 @@
         if(!juegoActivo) return;
         if (Math.abs(elegido - correcto) < 0.01) {
             puntos += 10;
-            popMensaje("¡SÍ! +10", "#4caf50");
+            popMensaje("+10"); 
             nivelActual++;
             generarNivel();
         } else {
             puntos = Math.max(0, puntos - 1);
-            popMensaje("-1", "#f44336");
-            obj.vx *= 1.3; 
+            popMensaje("-1"); 
+            obj.vx *= 1.2; 
         }
         document.getElementById('txt-puntos').innerText = puntos;
     }
@@ -389,30 +412,24 @@
         const maxX = window.innerWidth - MOTO_SIZE;
         cascos.forEach(c => {
             c.x += c.vx; 
-            
-            // CORRECCIÓN ANTIVIBRACIÓN:
-            // Si toca el borde izquierdo
             if (c.x <= 0) {
-                c.x = 0; // Forzamos posición
-                c.vx = Math.abs(c.vx); // Forzamos dirección derecha
-            } 
-            // Si toca el borde derecho
-            else if (c.x >= maxX) {
-                c.x = maxX; // Forzamos posición
-                c.vx = -Math.abs(c.vx); // Forzamos dirección izquierda
+                c.x = 0; 
+                c.vx = Math.abs(c.vx); 
+            } else if (c.x >= maxX) {
+                c.x = maxX; 
+                c.vx = -Math.abs(c.vx); 
             }
-
             c.el.style.transform = `translate(${c.x}px, ${c.y}px)`;
         });
         requestAnimationFrame(mover);
     }
 
-    function popMensaje(txt, col) {
+    function popMensaje(txt) {
         const m = document.getElementById('mensaje-pop');
         m.innerText = txt;
-        m.style.color = col;
         m.style.display = 'block';
-        setTimeout(() => m.style.display = 'none', 600);
+        // VISIBLE DURANTE 1 SEGUNDO
+        setTimeout(() => m.style.display = 'none', 1000);
     }
 
     function finalizarJuego(motivo) {
