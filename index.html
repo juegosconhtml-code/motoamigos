@@ -15,7 +15,6 @@
             font-family: 'Fredoka', sans-serif;
             margin: 0;
             overflow: hidden;
-            /* Fondo gris por defecto y carga de fondo.png */
             background: #555 url('fondo.png') no-repeat center center;
             background-size: cover;
             height: 100vh;
@@ -23,29 +22,21 @@
             color: #333;
         }
 
-        /* --- NUBES SUPERIORES --- */
+        /* --- NUBES --- */
         .capa-nubes {
             position: fixed;
-            /* MODIFICACIÓN: Subido un 15% (de 2% a -13%) */
             top: -13%; 
             left: 0;
-            width: 200vw; /* Doble ancho para bucle */
-            z-index: -1; /* Detrás de todo excepto el fondo */
+            width: 200vw;
+            z-index: -1;
             display: flex;
             pointer-events: none;
             user-select: none;
             opacity: 0.8;
         }
 
-        #capa-nubes-1 {
-            /* Velocidad reducida un 90% adicional (10s * 10 = 100s) */
-            animation: avanzarNubes 100s linear infinite;
-        }
-
-        #capa-nubes-2 {
-            /* Velocidad reducida un 90% adicional (5s * 10 = 50s) */
-            animation: avanzarNubes 50s linear infinite;
-        }
+        #capa-nubes-1 { animation: avanzarNubes 100s linear infinite; }
+        #capa-nubes-2 { animation: avanzarNubes 50s linear infinite; }
 
         .nubes-contenedor {
             width: 100vw;
@@ -54,7 +45,6 @@
         }
 
         .nubes-contenedor img {
-            /* MODIFICACIÓN: 300% más grandes (de 90px a 360px) */
             height: 360px;
             width: auto;
         }
@@ -67,11 +57,10 @@
         /* --- PAISAJE CENTRAL --- */
         #paisaje-central {
             position: fixed;
-            /* MODIFICACIÓN: Bajado un 3% (de 28% a 31%) */
             top: 31%;
             left: 0;
-            width: 200vw; /* Doble ancho para animar en bucle continuo */
-            height: 32%; /* Acaba justo donde empieza la pista */
+            width: 200vw;
+            height: 32%;
             z-index: 0;
             display: flex;
             align-items: flex-end;
@@ -83,14 +72,13 @@
         .paisaje-texto {
             width: 100vw;
             display: flex;
-            justify-content: space-around; /* Mantiene la distribución horizontal */
-            align-items: flex-end; /* Alinea los arbustos a la base del div, igual que antes */
+            justify-content: space-around;
+            align-items: flex-end;
         }
 
-        /* Estilos específicos para la imagen del arbusto */
         .paisaje-texto img {
-            /* MODIFICACIÓN: 100% más grandes que la versión anterior (de 480px a 960px) */
-            height: 960px;
+            /* REDUCIDO 20%: de 960px a 768px */
+            height: 768px;
             width: auto;
             margin: 0 20px;
         }
@@ -100,7 +88,7 @@
             to { transform: translateX(0); }
         }
 
-        /* --- EFECTO VELOCIDAD (LÍNEAS DE PISTA) --- */
+        /* --- PISTA --- */
         #lineas-pista {
             position: fixed;
             top: 77%;
@@ -108,19 +96,17 @@
             width: 100vw;
             height: 15px;
             background-image: repeating-linear-gradient(90deg, white 0, white 100px, transparent 100px, transparent 200px);
-            /* Velocidad aumentada un 100% (de 0.4s a 0.2s) */
             animation: avanzarLineas 0.2s linear infinite;
-            z-index: 1; /* Se mantiene detrás de las motos */
+            z-index: 1;
             opacity: 0.8;
         }
 
         @keyframes avanzarLineas {
             from { background-position: 0 0; }
-            /* Animación hacia la derecha (de -200px a 200px) */
             to { background-position: 200px 0; }
         }
 
-        /* --- PANTALLAS --- */
+        /* --- UI --- */
         .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -129,20 +115,19 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 9000; /* Aumentado para evitar solapamiento con motos */
+            z-index: 9000;
             color: white;
             text-align: center;
             padding: 20px;
         }
 
-        /* --- UI / MARCADORES --- */
         #ui-superior {
             position: fixed;
             top: 10px;
             width: 100%;
             display: flex;
             justify-content: space-around;
-            z-index: 8000; /* Aumentado */
+            z-index: 8000;
         }
 
         .stat-card {
@@ -165,7 +150,7 @@
             border-radius: 10px;
             border: 3px solid #333;
             overflow: hidden;
-            z-index: 8000; /* Aumentado */
+            z-index: 8000;
         }
 
         #timer-bar {
@@ -175,7 +160,6 @@
             transition: width 0.1s linear, background 0.5s;
         }
 
-        /* --- PREGUNTA --- */
         #panel-pregunta {
             position: fixed;
             top: 80px;
@@ -186,7 +170,7 @@
             border-radius: 20px;
             border: 4px solid #37474f;
             text-align: center;
-            z-index: 7000; /* Aumentado */
+            z-index: 7000;
             box-shadow: 0 8px 0 #cfd8dc;
         }
 
@@ -199,10 +183,10 @@
         /* --- MOTOS --- */
         .moto-contenedor {
             position: absolute;
-            width: 260px;
-            height: 260px;
+            /* AUMENTADO 25%: de 260px a 325px */
+            width: 325px;
+            height: 325px;
             cursor: pointer;
-            /* El z-index se aplica por JS dinámicamente */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -210,13 +194,14 @@
         }
 
         .moto-img {
-            width: 180px;
+            /* AUMENTADO 25%: de 180px a 225px */
+            width: 225px;
             height: auto;
             display: block;
         }
 
         .moto-fallback {
-            font-size: 120px;
+            font-size: 140px;
             line-height: 1;
         }
 
@@ -232,7 +217,6 @@
             white-space: nowrap;
         }
 
-        /* --- BOTONES --- */
         .btn-play {
             background: #ffeb3b;
             border: none;
@@ -244,18 +228,6 @@
             cursor: pointer;
             box-shadow: 0 8px 0 #fbc02d;
             margin-top: 20px;
-        }
-        .btn-play:hover { background: #fff176; }
-
-        #mensaje-pop {
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 60px;
-            font-weight: bold;
-            z-index: 9999; /* Aumentado al máximo */
-            pointer-events: none;
-            display: none;
         }
     </style>
 </head>
@@ -285,7 +257,7 @@
         <div id="timer-bar"></div>
     </div>
 
-    <div id="mensaje-pop"></div>
+    <div id="mensaje-pop" style="position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); font-size:60px; font-weight:bold; z-index:9999; pointer-events:none; display:none;"></div>
 
     <div id="pantalla-final" class="overlay" style="display:none;">
         <h1 id="titulo-final">CARRERA TERMINADA</h1>
@@ -294,40 +266,22 @@
     </div>
 
     <div id="capa-nubes-1" class="capa-nubes">
-        <div class="nubes-contenedor">
-            <img src="nube1.png" alt="nube"><img src="nube1.png" alt="nube"><img src="nube1.png" alt="nube">
-        </div>
-        <div class="nubes-contenedor">
-            <img src="nube1.png" alt="nube"><img src="nube1.png" alt="nube"><img src="nube1.png" alt="nube">
-        </div>
-    </div>
-
-    <div id="capa-nubes-2" class="capa-nubes">
-        <div class="nubes-contenedor">
-            <img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube">
-        </div>
-        <div class="nubes-contenedor">
-            <img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube">
-        </div>
+        <div class="nubes-contenedor"><img src="nube1.png" alt="nube"><img src="nube1.png" alt="nube"><img src="nube1.png" alt="nube"></div>
+        <div class="nubes-contenedor"><img src="nube1.png" alt="nube"><img src="nube1.png" alt="nube"><img src="nube1.png" alt="nube"></div>
     </div>
 
     <div id="paisaje-central">
-        <div class="paisaje-texto">
-            <img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto">
-        </div>
-        <div class="paisaje-texto">
-            <img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto">
-        </div>
+        <div class="paisaje-texto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"></div>
+        <div class="paisaje-texto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"><img src="arbusto.png" alt="arbusto"></div>
     </div>
 
     <div id="lineas-pista"></div>
-
     <div id="game-area"></div>
 
 <script>
     const TIEMPO_MAX = 30;
     const MAX_NIVELES = 50;
-    const TOTAL_MOTOS = 5;
+    const MOTO_SIZE = 325; // Tamaño actualizado
 
     let puntos = 0;
     let nivelActual = 1;
@@ -378,14 +332,13 @@
         opciones.sort(() => Math.random() - 0.5);
 
         let minY = window.innerHeight * 0.55; 
-        let maxY = window.innerHeight - 260;
-        if (minY > maxY) minY = maxY - 20;
+        let maxY = window.innerHeight - MOTO_SIZE;
 
         opciones.forEach((val, i) => {
             const div = document.createElement('div');
             div.className = 'moto-contenedor';
             
-            const motoNum = i + 1;
+            const motoNum = (i % 5) + 1;
             div.innerHTML = `
                 <img src="moto${motoNum}.png" class="moto-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                 <div class="moto-fallback" style="display:none;">🏍️</div>
@@ -395,15 +348,12 @@
             const obj = {
                 el: div,
                 val: val,
-                x: Math.random() * (window.innerWidth - 260),
+                x: Math.random() * (window.innerWidth - MOTO_SIZE),
                 y: Math.random() * (maxY - minY) + minY,
-                vx: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 1.75 + 1.4),
-                vy: 0 
+                vx: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 1.75 + 1.4)
             };
 
-            // Regla de perspectiva: A mayor Y (más abajo en pantalla), mayor capa Z.
             div.style.zIndex = Math.floor(obj.y);
-
             div.onclick = () => checkRespuesta(val, correctNum, obj);
             area.appendChild(div);
             cascos.push(obj);
@@ -412,7 +362,6 @@
 
     function checkRespuesta(elegido, correcto, obj) {
         if(!juegoActivo) return;
-
         if (Math.abs(elegido - correcto) < 0.01) {
             puntos += 10;
             popMensaje("¡SÍ! +10", "#4caf50");
@@ -421,7 +370,7 @@
         } else {
             puntos = Math.max(0, puntos - 1);
             popMensaje("-1", "#f44336");
-            obj.vx *= 1.5; 
+            obj.vx *= 1.3; 
         }
         document.getElementById('txt-puntos').innerText = puntos;
     }
@@ -434,26 +383,17 @@
             const porcentaje = (tiempoRestante / TIEMPO_MAX) * 100;
             const bar = document.getElementById('timer-bar');
             bar.style.width = porcentaje + "%";
-
             if(porcentaje < 30) bar.style.background = "#f44336";
-            else bar.style.background = "#4caf50";
-
-            if(tiempoRestante <= 0) {
-                finalizarJuego("¡SE ACABÓ EL TIEMPO!");
-            }
+            if(tiempoRestante <= 0) finalizarJuego("¡SE ACABÓ EL TIEMPO!");
         }, 100);
     }
 
     function mover() {
         if(!juegoActivo) return;
-        
-        const maxX = window.innerWidth - 260;
-
+        const maxX = window.innerWidth - MOTO_SIZE;
         cascos.forEach(c => {
             c.x += c.vx; 
-            
             if (c.x <= 0 || c.x >= maxX) c.vx *= -1;
-            
             c.el.style.transform = `translate(${c.x}px, ${c.y}px)`;
         });
         requestAnimationFrame(mover);
