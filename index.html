@@ -102,8 +102,8 @@
         /* --- MOTOS --- */
         .moto-contenedor {
             position: absolute;
-            width: 260px; /* Duplicado de 130px a 260px */
-            height: 260px; /* Duplicado de 130px a 260px */
+            width: 260px;
+            height: 260px;
             cursor: pointer;
             z-index: 10;
             display: flex;
@@ -113,25 +113,25 @@
         }
 
         .moto-img {
-            width: 180px; /* Duplicado de 90px a 180px */
+            width: 180px;
             height: auto;
             display: block;
         }
 
         .moto-fallback {
-            font-size: 120px; /* Duplicado de 60px a 120px */
+            font-size: 120px;
             line-height: 1;
         }
 
         .numero-moto {
-            margin-top: 10px; /* Duplicado de 5px a 10px */
-            font-size: 32px; /* Añadido tamaño de fuente grande */
+            margin-top: 10px;
+            font-size: 32px;
             font-weight: 700;
             background: #37474f;
             color: white;
-            padding: 4px 20px; /* Duplicado el padding */
-            border-radius: 20px; /* Duplicado el borde redondeado */
-            border: 4px solid white; /* Duplicado el grosor del borde */
+            padding: 4px 20px;
+            border-radius: 20px;
+            border: 4px solid white;
             white-space: nowrap;
         }
 
@@ -251,6 +251,12 @@
         }
         opciones.sort(() => Math.random() - 0.5);
 
+        // Definir la franja inferior (aprox desde el 60% hacia abajo)
+        let minY = window.innerHeight * 0.6; 
+        let maxY = window.innerHeight - 260;
+        // Seguro por si la pantalla es de poca altura
+        if (minY > maxY) minY = maxY - 20;
+
         opciones.forEach((val, i) => {
             const div = document.createElement('div');
             div.className = 'moto-contenedor';
@@ -265,11 +271,13 @@
             const obj = {
                 el: div,
                 val: val,
-                // Ajustado a 260 para evitar que las motos grandes aparezcan fuera de la pantalla
                 x: Math.random() * (window.innerWidth - 260),
-                y: Math.random() * (window.innerHeight - 300) + 200,
-                vx: (Math.random() - 0.5) * 6,
-                vy: (Math.random() - 0.5) * 6
+                // Aparecen dentro de la franja inferior
+                y: Math.random() * (maxY - minY) + minY,
+                // Movimiento predominante horizontal (entre 4 y 9)
+                vx: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 5 + 4),
+                // Variación vertical muy leve (entre 0.5 y 2)
+                vy: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 1.5 + 0.5)
             };
 
             div.onclick = () => checkRespuesta(val, correctNum, obj);
@@ -314,14 +322,21 @@
 
     function mover() {
         if(!juegoActivo) return;
-        // Ajustados los límites a 260 para que las motos reboten correctamente sin salirse del borde
+        
         const maxX = window.innerWidth - 260;
         const maxY = window.innerHeight - 260;
+        
+        // Mantener la franja inferior constante
+        let minY = window.innerHeight * 0.6; 
+        if (minY > maxY) minY = maxY - 20;
 
         cascos.forEach(c => {
             c.x += c.vx; c.y += c.vy;
+            
             if (c.x <= 0 || c.x >= maxX) c.vx *= -1;
-            if (c.y <= 180 || c.y >= maxY) c.vy *= -1;
+            // Rebota si intenta salir de la franja inferior calculada
+            if (c.y <= minY || c.y >= maxY) c.vy *= -1;
+            
             c.el.style.transform = `translate(${c.x}px, ${c.y}px)`;
         });
         requestAnimationFrame(mover);
