@@ -37,13 +37,13 @@
         }
 
         #capa-nubes-1 {
-            /* Velocidad: 2% de las líneas (0.2s / 0.02 = 10s) */
-            animation: avanzarNubes 10s linear infinite;
+            /* Velocidad reducida un 90% adicional (10s * 10 = 100s) */
+            animation: avanzarNubes 100s linear infinite;
         }
 
         #capa-nubes-2 {
-            /* Velocidad: 4% de las líneas (0.2s / 0.04 = 5s) */
-            animation: avanzarNubes 5s linear infinite;
+            /* Velocidad reducida un 90% adicional (5s * 10 = 50s) */
+            animation: avanzarNubes 50s linear infinite;
         }
 
         .nubes-contenedor {
@@ -53,7 +53,8 @@
         }
 
         .nubes-contenedor img {
-            height: 90px; /* Misma altura que tenían los emoticonos */
+            /* MODIFICACIÓN: 300% más grandes (de 90px a 360px) */
+            height: 360px;
             width: auto;
         }
 
@@ -65,7 +66,6 @@
         /* --- PAISAJE CENTRAL --- */
         #paisaje-central {
             position: fixed;
-            /* MODIFICACIÓN: Bajado un 3% (de 25% a 28%) */
             top: 28%;
             left: 0;
             width: 200vw; /* Doble ancho para animar en bucle continuo */
@@ -87,8 +87,8 @@
 
         /* Estilos específicos para la imagen del arbusto */
         .paisaje-texto img {
-            /* MODIFICACIÓN: 300% más grandes (de 160px a 480px) */
-            height: 480px;
+            /* MODIFICACIÓN: 100% más grandes que la versión anterior (de 480px a 960px) */
+            height: 960px;
             width: auto;
             margin: 0 20px;
         }
