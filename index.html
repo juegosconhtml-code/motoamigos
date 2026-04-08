@@ -23,11 +23,50 @@
             color: #333;
         }
 
+        /* --- NUBES SUPERIORES --- */
+        .capa-nubes {
+            position: fixed;
+            top: 2%; /* Parte más superior */
+            left: 0;
+            width: 200vw; /* Doble ancho para bucle */
+            z-index: -1; /* Detrás de todo excepto el fondo */
+            display: flex;
+            pointer-events: none;
+            user-select: none;
+            opacity: 0.8;
+        }
+
+        #capa-nubes-1 {
+            /* Velocidad: 2% de las líneas (0.2s / 0.02 = 10s) */
+            animation: avanzarNubes 10s linear infinite;
+        }
+
+        #capa-nubes-2 {
+            /* Velocidad: 4% de las líneas (0.2s / 0.04 = 5s) */
+            animation: avanzarNubes 5s linear infinite;
+        }
+
+        .nubes-contenedor {
+            width: 100vw;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nubes-contenedor img {
+            height: 90px; /* Misma altura que tenían los emoticonos */
+            width: auto;
+        }
+
+        @keyframes avanzarNubes {
+            from { transform: translateX(-100vw); }
+            to { transform: translateX(0); }
+        }
+
         /* --- PAISAJE CENTRAL --- */
         #paisaje-central {
             position: fixed;
-            /* MODIFICACIÓN: Subido un 20% (de 45% a 25%) */
-            top: 25%;
+            /* MODIFICACIÓN: Bajado un 3% (de 25% a 28%) */
+            top: 28%;
             left: 0;
             width: 200vw; /* Doble ancho para animar en bucle continuo */
             height: 32%; /* Acaba justo donde empieza la pista */
@@ -250,6 +289,24 @@
         <h1 id="titulo-final">CARRERA TERMINADA</h1>
         <h2 style="font-size: 40px;">PUNTUACIÓN: <span id="puntos-final">0</span></h2>
         <button class="btn-play" onclick="location.reload()">REINTENTAR</button>
+    </div>
+
+    <div id="capa-nubes-1" class="capa-nubes">
+        <div class="nubes-contenedor">
+            <img src="nube1.png" alt="nube"><img src="nube1.png" alt="nube"><img src="nube1.png" alt="nube">
+        </div>
+        <div class="nubes-contenedor">
+            <img src="nube1.png" alt="nube"><img src="nube1.png" alt="nube"><img src="nube1.png" alt="nube">
+        </div>
+    </div>
+
+    <div id="capa-nubes-2" class="capa-nubes">
+        <div class="nubes-contenedor">
+            <img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube">
+        </div>
+        <div class="nubes-contenedor">
+            <img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube"><img src="nube2.png" alt="nube">
+        </div>
     </div>
 
     <div id="paisaje-central">
