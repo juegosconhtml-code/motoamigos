@@ -77,7 +77,6 @@
         }
 
         .paisaje-texto img {
-            /* REDUCIDO 20%: de 960px a 768px */
             height: 768px;
             width: auto;
             margin: 0 20px;
@@ -183,7 +182,6 @@
         /* --- MOTOS --- */
         .moto-contenedor {
             position: absolute;
-            /* AUMENTADO 25%: de 260px a 325px */
             width: 325px;
             height: 325px;
             cursor: pointer;
@@ -194,7 +192,6 @@
         }
 
         .moto-img {
-            /* AUMENTADO 25%: de 180px a 225px */
             width: 225px;
             height: auto;
             display: block;
@@ -281,7 +278,7 @@
 <script>
     const TIEMPO_MAX = 30;
     const MAX_NIVELES = 50;
-    const MOTO_SIZE = 325; // Tamaño actualizado
+    const MOTO_SIZE = 325; 
 
     let puntos = 0;
     let nivelActual = 1;
@@ -334,6 +331,11 @@
         let minY = window.innerHeight * 0.55; 
         let maxY = window.innerHeight - MOTO_SIZE;
 
+        // Distribución horizontal controlada: 5 carriles
+        const anchoCarril = window.innerWidth / 5;
+        // Velocidades distintas para evitar que viajen pegadas
+        const velocidadesBase = [1.5, 2.2, 2.9, 3.6, 4.3].sort(() => Math.random() - 0.5);
+
         opciones.forEach((val, i) => {
             const div = document.createElement('div');
             div.className = 'moto-contenedor';
@@ -345,12 +347,15 @@
                 <div class="numero-moto">${val.toFixed(2).replace('.', ',')}</div>
             `;
             
+            // Cada moto empieza en el centro de su propio carril (0 a 4)
+            const posXInicial = (i * anchoCarril) + (anchoCarril / 2) - (MOTO_SIZE / 2);
+            
             const obj = {
                 el: div,
                 val: val,
-                x: Math.random() * (window.innerWidth - MOTO_SIZE),
+                x: posXInicial,
                 y: Math.random() * (maxY - minY) + minY,
-                vx: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 1.75 + 1.4)
+                vx: (Math.random() > 0.5 ? 1 : -1) * velocidadesBase[i]
             };
 
             div.style.zIndex = Math.floor(obj.y);
@@ -384,6 +389,7 @@
             const bar = document.getElementById('timer-bar');
             bar.style.width = porcentaje + "%";
             if(porcentaje < 30) bar.style.background = "#f44336";
+            else bar.style.background = "#4caf50";
             if(tiempoRestante <= 0) finalizarJuego("¡SE ACABÓ EL TIEMPO!");
         }, 100);
     }
